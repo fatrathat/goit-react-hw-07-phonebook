@@ -1,7 +1,5 @@
 import styles from './style.module.css';
 
-import { nanoid } from 'nanoid';
-
 import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from '../../store/actions/contacts-actions';
 
@@ -21,7 +19,6 @@ const ContactForm = () => {
         addContact({
           name: name,
           number: number,
-          id: nanoid(),
         })
       );
     }
