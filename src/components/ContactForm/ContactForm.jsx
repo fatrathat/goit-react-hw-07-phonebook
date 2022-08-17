@@ -1,26 +1,24 @@
 import styles from './style.module.css';
 
-import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from '../../store/actions/contacts-actions';
+import {
+  useAddContactMutation,
+  useGetContactsQuery,
+} from '../../store/reduxRTK';
 
 const ContactForm = () => {
-  const dispatch = useDispatch();
-  const contacts = useSelector(state => state.contacts.items);
+  const { data } = useGetContactsQuery();
+
+  const [addContact] = useAddContactMutation();
 
   const submitHandler = e => {
     e.preventDefault();
     const name = e.target.name.value;
     const number = e.target.number.value;
 
-    if (contacts.find(el => el.name === name)) {
+    if (data.find(el => el.name === name)) {
       alert(`${name} is already in contacts`);
     } else {
-      dispatch(
-        addContact({
-          name: name,
-          number: number,
-        })
-      );
+      addContact({ name: name, phone: number });
     }
     e.target.reset();
   };

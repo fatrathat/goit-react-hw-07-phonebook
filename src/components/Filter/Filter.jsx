@@ -1,15 +1,14 @@
 import styles from './style.module.css';
 
-import { useDispatch } from 'react-redux';
-import { setFilter } from '../../store/actions/filters-actions';
+// import { useDispatch } from 'react-redux';
+// import { setFilter } from '../../store/actions/filters-actions';
 
 const Filter = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const changeHandler = e => {
-    const { value } = e.target;
-
-    dispatch(setFilter(value));
+    // const { value } = e.target;
+    // dispatch(setFilter(value));
   };
 
   return (
