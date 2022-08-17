@@ -1,6 +1,6 @@
 import styles from './style.module.css';
-// import { selectVisibleContacts } from '../../store/selectors/contacts-selectors';
-// import { selectFilterContacts } from '../../store/selectors/filters-selectors';
+import { selectVisibleContacts } from '../../store/selectors/contacts-selectors';
+import { useSelector } from 'react-redux';
 
 import {
   useGetContactsQuery,
@@ -8,21 +8,22 @@ import {
 } from '../../store/reduxRTK';
 
 const ContactsList = () => {
-  // const filter = selectFilterContacts();
-  // const contacts = useSelector(state => selectVisibleContacts(state));
+  const filter = useSelector(state => state.filter);
 
-  const { data, isLoading } = useGetContactsQuery();
+  const { data: contacts, isLoading } = useGetContactsQuery();
   const [deleteContact] = useDeleteContactMutation();
 
   const deleteButtonHandler = id => {
     deleteContact(id);
   };
 
-  return (
-    <ul>
-      {isLoading && <div>Загрузка...</div>}
-      {data &&
-        data.map(contact => {
+  if (contacts) {
+    const contactsList = selectVisibleContacts(contacts, filter);
+
+    return (
+      <ul>
+        {isLoading && <div>Загрузка...</div>}
+        {contactsList.map(contact => {
           return (
             <li className={styles.FilterItem} key={contact.id}>
               {contact.name}: {contact.phone}
@@ -36,8 +37,9 @@ const ContactsList = () => {
             </li>
           );
         })}
-    </ul>
-  );
+      </ul>
+    );
+  }
 };
 
 export default ContactsList;
